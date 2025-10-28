@@ -87,6 +87,10 @@ def main():
             stored_at = payload["stored_at"]
             meta = payload.get("meta", {})
             salience = float(payload.get("salience", 1.0))
+            agent_id = payload.get("agent_id", "default_agent")
+            visibility = payload.get("visibility", "private")
+            provenance = payload.get("provenance")
+
             if anchor_exists(client, anchor_id):
                 warn_msg = {
                     "anchor_id": anchor_id,
@@ -114,6 +118,9 @@ def main():
                             "stored_at": stored_at,
                             "salience": salience,
                             "meta": meta,
+                            "agent_id": agent_id,
+                            "visibility": visibility,
+                            "provenance": provenance,
                         },
                     )
                 ],

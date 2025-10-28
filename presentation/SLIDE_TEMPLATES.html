@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human-Like Memory for Virtual Humans - Presentation</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2c3e50;
+            overflow: hidden;
+        }
+
+        /* Slide Container */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .authors {
+            font-size: 1.4rem;
+            color: #e67e22;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .date {
+            font-size: 1.2rem;
+            color: #95a5a6;
+        }
+
+        /* Content Styles */
+        .split-content {
+            display: flex;
+            width: 100%;
+            gap: 60px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .split-left, .split-right {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .ai-box, .human-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+
+        .ai-box {
+            border-left-color: #e74c3c;
+        }
+
+        .human-box {
+            border-left-color: #27ae60;
+        }
+
+        .ai-icon::before {
+            content: "🤖";
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        .human-icon::before {
+            content: "👤";
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        /* Formula Styles */
+        .formula {
+            background: #ecf0f1;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            border: 2px solid #3498db;
+        }
+
+        .formula-parts {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            width: 80%;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .use-case {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+
+        .use-case-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .use-case h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .use-case p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        /* Architecture Diagram */
+        .architecture {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            margin: 40px 0;
+        }
+
+        .service-box {
+            background: #3498db;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 150px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #3498db;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .timeline-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #e67e22;
+        }
+
+        .timeline-weeks {
+            font-weight: 600;
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        /* Slide Counter */
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        /* Demo Indicator */
+        .demo-indicator {
+            background: #e67e22;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 30px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            .split-content { flex-direction: column; }
+            .use-cases { grid-template-columns: 1fr; }
+            .timeline { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <h1>Human-Like Memory for Virtual Humans</h1>
+        <p class="subtitle">Making AI forget like humans do</p>
+        <p class="authors">Coen Crombach & Lonn van Bokhorst</p>
+        <p class="date">October 2025 • Research Group IxD</p>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide">
+        <h2>The Problem with AI Memory</h2>
+        <div class="split-content">
+            <div class="split-left">
+                <h3 style="color: #e74c3c; margin-bottom: 30px;">Current AI</h3>
+                <div class="ai-box">
+                    <div class="ai-icon">Perfect Recall</div>
+                    <p>"On October 15th at 14:32:17 you said..."</p>
+                </div>
+                <div class="ai-box">
+                    <div class="ai-icon">Total Amnesia</div>
+                    <p>"I don't remember our previous conversation"</p>
+                </div>
+            </div>
+            <div class="split-right">
+                <h3 style="color: #27ae60; margin-bottom: 30px;">Humans</h3>
+                <div class="human-box">
+                    <div class="human-icon">Fuzzy Memory</div>
+                    <p>"Last week we talked about... something important"</p>
+                </div>
+                <div class="human-box">
+                    <div class="human-icon">Selective Forgetting</div>
+                    <p>"I remember the meeting but not what I wore"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Our Solution -->
+    <div class="slide">
+        <h2>Our Solution: The Ebbinghaus Curve</h2>
+        <div class="chart-container">
+            <canvas id="ebbinghausChart" width="800" height="300"></canvas>
+        </div>
+        <p style="font-size: 1.4rem; margin-top: 20px;">
+            <strong>94%</strong> after 30 days • <strong>70%</strong> after 180 days • <strong>48%</strong> after 1 year
+        </p>
+        <div class="demo-indicator">
+            🎬 LIVE DEMO: Time Travel Memory
+        </div>
+    </div>
+
+    <!-- Slide 4: Multi-Factor Activation -->
+    <div class="slide">
+        <h2>Important Things Resist Forgetting</h2>
+        <div class="formula">
+            Memory Activation = Similarity × Decay × Salience
+            <div class="formula-parts">
+                <span>↑<br>How relevant</span>
+                <span>↑<br>How old</span>
+                <span>↑<br>How important</span>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-around; margin-top: 40px;">
+            <div style="text-align: center;">
+                <h3 style="color: #e74c3c;">Recent Trivial</h3>
+                <p>0.4 × 0.998 × 0.3 = <strong>0.12</strong></p>
+            </div>
+            <div style="text-align: center;">
+                <h3 style="color: #27ae60;">Old Critical</h3>
+                <p>0.6 × 0.70 × 2.5 = <strong>1.05</strong> ← Wins!</p>
+            </div>
+        </div>
+        <div class="demo-indicator">
+            🎬 LIVE DEMO: Importance Beats Recency
+        </div>
+    </div>
+
+    <!-- Slide 5: Applications -->
+    <div class="slide">
+        <h2>What This Means for Virtual Humans</h2>
+        <div class="use-cases">
+            <div class="use-case">
+                <div class="use-case-icon">🎯</div>
+                <h3>Personalized Assistance</h3>
+                <p>Remembers your preferences<br>Forgets your typos</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">🤝</div>
+                <h3>Relationship Building</h3>
+                <p>Builds authentic connections over time<br>Natural conversation continuity</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">👥</div>
+                <h3>Multi-Agent Teams</h3>
+                <p>Shared important knowledge<br>Individual personality perspectives</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Architecture -->
+    <div class="slide">
+        <h2>The Architecture (Lonn's Masterpiece)</h2>
+        <div class="architecture">
+            <div class="service-box">
+                📝 Indexer<br>
+                <small>Stores memories</small>
+            </div>
+            <div class="arrow">→</div>
+            <div class="service-box">
+                🧠 Resonance<br>
+                <small>Finds relevant ones</small>
+            </div>
+            <div class="arrow">→</div>
+            <div class="service-box">
+                💬 Reteller<br>
+                <small>Makes human-like</small>
+            </div>
+        </div>
+        <p style="font-size: 1.4rem; margin-top: 40px; color: #7f8c8d;">
+            Connected by: <strong>Kafka Streams + Qdrant Vector DB</strong>
+        </p>
+        <div class="demo-indicator" style="background: #95a5a6;">
+            📊 Optional: Show the Science
+        </div>
+    </div>
+
+    <!-- Slide 7: Roadmap -->
+    <div class="slide">
+        <h2>What's Next: 12-Week Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-weeks">Weeks 1-3</div>
+                <h3>👥 Multi-Agent Memory</h3>
+                <p>Shared vs private memories</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-weeks">Weeks 4-6</div>
+                <h3>🎭 Character-Driven Retelling</h3>
+                <p>Personality influences memory</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-weeks">Weeks 7-8</div>
+                <h3>🔒 Security & Privacy</h3>
+                <p>Production-grade safety</p>
+            </div>
+        </div>
+        <div class="timeline" style="margin-top: 20px;">
+            <div class="timeline-item">
+                <div class="timeline-weeks">Weeks 9-10</div>
+                <h3>⚡ Scale Testing</h3>
+                <p>100+ agents, 100k+ memories</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-weeks">Weeks 11-12</div>
+                <h3>🔗 Platform Integration</h3>
+                <p>Virtual Human platform</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-weeks">Outcome</div>
+                <h3>📄 Publication</h3>
+                <p>Research paper + open source</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Questions -->
+    <div class="slide">
+        <h2>Questions?</h2>
+        <div style="margin: 40px 0;">
+            <p style="font-size: 1.6rem; margin-bottom: 30px;">
+                <strong>Coen Crombach</strong> - c.crombach@fontys.nl<br>
+                <strong>Lonn van Bokhorst</strong> - l.vanbokhorst@fontys.nl
+            </p>
+            <p style="font-size: 1.3rem; color: #7f8c8d; margin-bottom: 40px;">
+                GitHub: Research-Group-IxD/convai-narrative-memory-poc
+            </p>
+        </div>
+        <p style="font-size: 1.8rem; font-style: italic; color: #3498db;">
+            "This isn't just better AI - it's more human AI"
+        </p>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlideIndex + direction;
+            if (newIndex >= 0 && newIndex < totalSlides) {
+                currentSlideIndex = newIndex;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+
+        // Draw Ebbinghaus Curve
+        function drawEbbinghausChart() {
+            const canvas = document.getElementById('ebbinghausChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Set up the chart
+            const padding = 60;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#34495e';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(padding, padding);
+            ctx.stroke();
+
+            // Draw curve
+            ctx.strokeStyle = '#e67e22';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            const lambda = 0.002;
+            for (let x = 0; x <= chartWidth; x++) {
+                const days = (x / chartWidth) * 730; // 2 years
+                const retention = Math.exp(-lambda * days);
+                const y = height - padding - (retention * chartHeight);
+                
+                if (x === 0) {
+                    ctx.moveTo(padding + x, y);
+                } else {
+                    ctx.lineTo(padding + x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Add labels
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '14px Segoe UI';
+            ctx.textAlign = 'center';
+            
+            // X-axis labels
+            const timePoints = [0, 30, 180, 365, 730];
+            const timeLabels = ['0', '30d', '6m', '1y', '2y'];
+            timePoints.forEach((days, i) => {
+                const x = padding + (days / 730) * chartWidth;
+                ctx.fillText(timeLabels[i], x, height - padding + 25);
+            });
+
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 100; i += 25) {
+                const y = height - padding - (i / 100) * chartHeight;
+                ctx.fillText(i + '%', padding - 10, y + 5);
+            }
+
+            // Add key points
+            const keyPoints = [
+                { days: 30, retention: 0.94, label: '94%' },
+                { days: 180, retention: 0.70, label: '70%' },
+                { days: 365, retention: 0.48, label: '48%' }
+            ];
+
+            ctx.fillStyle = '#e67e22';
+            keyPoints.forEach(point => {
+                const x = padding + (point.days / 730) * chartWidth;
+                const y = height - padding - (point.retention * chartHeight);
+                
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText(point.label, x, y - 15);
+                ctx.fillStyle = '#e67e22';
+            });
+        }
+
+        // Draw chart when slide 3 is shown
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.target.classList.contains('active') && 
+                    mutation.target.querySelector('#ebbinghausChart')) {
+                    setTimeout(drawEbbinghausChart, 100);
+                }
+            });
+        });
+
+        slides.forEach(slide => {
+            observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+        });
+
+        // Initial chart draw if slide 3 is active
+        if (slides[2].classList.contains('active')) {
+            setTimeout(drawEbbinghausChart, 100);
+        }
+    </script>
+</body>
+</html>

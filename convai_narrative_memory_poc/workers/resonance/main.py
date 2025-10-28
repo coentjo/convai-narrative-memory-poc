@@ -69,6 +69,8 @@ def select_diverse_scored(scored, desired, embedding_cache):
 
     threshold = DIVERSITY_THRESHOLD
 
+
+
     def anchor_tags(hit_payload):
         meta = hit_payload.get("meta") or {}
         tags = meta.get("tags")
@@ -87,7 +89,7 @@ def select_diverse_scored(scored, desired, embedding_cache):
                 continue
 
             payload = getattr(h, "payload", {}) or {}
-            text = payload.get("text")
+            text = payload.get("text")i
             if text and text not in embedding_cache:
                 embedding_cache[text] = get_embedding(text)
 

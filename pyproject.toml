@@ -28,6 +28,7 @@ dependencies = [
     "annotated-types>=0.7.0",
     "typing-inspection>=0.4.2",
     "streamlit>=1.38.0",
+    "matplotlib>=3.10.7",
 ]
 
 [build-system]
