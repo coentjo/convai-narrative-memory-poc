@@ -317,13 +317,14 @@ def main():
                 {"role": "system", "content": guidance["system"]},
                 {"role": "user", "content": guidance["user"]},
             ]
-            if OPENAI_API_KEY:
+
+            if OLLAMA:
+                prompt = "\n\n".join([guidance["system"], guidance["user"]])
+                text = call_ollama(prompt)
+            if text is None and OPENAI_API_KEY:
                 text = call_openai(messages)
             if text is None:
                 text = call_portkey(messages)
-            if text is None and OLLAMA:
-                prompt = "\n\n".join([guidance["system"], guidance["user"]])
-                text = call_ollama(prompt)
             if text is None:
                 text = retell_stub(beats)
             out = {"request_id": request_id, "retelling": text}

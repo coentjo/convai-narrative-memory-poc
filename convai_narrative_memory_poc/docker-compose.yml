@@ -109,7 +109,7 @@ services:
       - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3}
     depends_on: [kafka, qdrant, indexer, resonance, reteller]
     ports:
-      - "${STREAMLIT_PORT:-8501}:8501"
+      - "${STREAMLIT_PORT:-8502}:8501"
     command: streamlit run convai_narrative_memory_poc/ui/streamlit_app.py --server.address=0.0.0.0
 
 volumes:

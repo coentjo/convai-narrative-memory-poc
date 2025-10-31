@@ -89,7 +89,7 @@ def select_diverse_scored(scored, desired, embedding_cache):
                 continue
 
             payload = getattr(h, "payload", {}) or {}
-            text = payload.get("text")i
+            text = payload.get("text")
             if text and text not in embedding_cache:
                 embedding_cache[text] = get_embedding(text)
 
